@@ -19,13 +19,13 @@ public class HelloServlet extends HttpServlet {
 
     private final String USER_AGENT = "Mozilla/5.0";
 
-    private String ip = "iloveinsure.com";
+    private String ip = "";
 
     PrintWriter out;
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String url = "http://" + ip + "/MDC_MIDDLEWARE/api/mimi/z";
+        String url = "";
 
         out = resp.getWriter();
 
