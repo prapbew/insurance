@@ -36,7 +36,7 @@ public class DemoServlet extends HttpServlet {
 
     private final String USER_AGENT = "Mozilla/5.0";
 
-    private String ip = "iloveinsure.com";
+    private String ip = "";
 
     PrintWriter out;
 
@@ -46,7 +46,7 @@ public class DemoServlet extends HttpServlet {
 
         out = resp.getWriter();
 
-        String url = "http://" + ip + "/MDC_MIDDLEWARE/api/mimi/z";
+        String url = "";
 
         try {
 //            sendGet(url);
