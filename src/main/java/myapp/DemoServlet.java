@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package myapp;
 
 import java.io.BufferedReader;
@@ -43,29 +42,30 @@ public class DemoServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException {
+            throws IOException {
+
+        out = resp.getWriter();
 
         String url = "http://" + ip + "/MDC_MIDDLEWARE/api/mimi/z";
 
         try {
-            sendGet(url);
+//            sendGet(url);
 
+            sendGet1(url);
         } catch (Exception ex) {
             Logger.getLogger(HelloServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        out = resp.getWriter();
         out.println("Hello, bew world");
 
-
-    //resp.setContentType("text/plain");
-    //resp.getWriter().println("{ \"bew\": \"World\" }");
+        //resp.setContentType("text/plain");
+        //resp.getWriter().println("{ \"bew\": \"World\" }");
     }
 
     // HTTP GET request
     private void sendGet(String url) throws Exception {
-        
-        out.println("Start Get");   
+
+        out.println("Start Get");
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -96,5 +96,32 @@ public class DemoServlet extends HttpServlet {
 
     }
 
+// HTTP GET request
+    private void sendGet1(String url) throws Exception {
 
+//		String url = "http://www.google.com/search?q=developer";
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(url);
+
+        // add request header
+        request.addHeader("User-Agent", USER_AGENT);
+
+        HttpResponse response = client.execute(request);
+
+        out.println("\nSending 'GET' request to URL : " + url);
+        out.println("Response Code : "
+                + response.getStatusLine().getStatusCode());
+
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+        out.println(result.toString());
+
+    }
 }

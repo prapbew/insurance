@@ -27,9 +27,12 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String url = "http://" + ip + "/MDC_MIDDLEWARE/api/mimi/z";
 
-        try {
-            sendGet(url);
+        out = resp.getWriter();
 
+        try {
+//            sendGet(url);
+
+            sendGet1(url);
         } catch (Exception ex) {
             Logger.getLogger(HelloServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -38,12 +41,10 @@ public class HelloServlet extends HttpServlet {
         out.println("Hello, bew world");
     }
 
-
-
     // HTTP GET request
     private void sendGet(String url) throws Exception {
-        
-        out.println("Start Get");   
+
+        out.println("Start Get");
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -71,6 +72,35 @@ public class HelloServlet extends HttpServlet {
 
         //print result
         out.println(response.toString());
+
+    }
+
+    // HTTP GET request
+    private void sendGet1(String url) throws Exception {
+
+//		String url = "http://www.google.com/search?q=developer";
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(url);
+
+        // add request header
+        request.addHeader("User-Agent", USER_AGENT);
+
+        HttpResponse response = client.execute(request);
+
+        out.println("\nSending 'GET' request to URL : " + url);
+        out.println("Response Code : "
+                + response.getStatusLine().getStatusCode());
+
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+        out.println(result.toString());
 
     }
 
